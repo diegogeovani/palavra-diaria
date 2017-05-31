@@ -1,4 +1,4 @@
-package br.com.palavra.domain;
+package br.com.palavra.domain.model;
 
 public class DailyWord {
 

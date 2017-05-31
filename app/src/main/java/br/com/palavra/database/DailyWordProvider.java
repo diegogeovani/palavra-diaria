@@ -3,7 +3,7 @@ package br.com.palavra.database;
 import android.content.Context;
 
 import br.com.palavra.R;
-import br.com.palavra.domain.DailyWord;
+import br.com.palavra.domain.model.DailyWord;
 
 public class DailyWordProvider implements DailyWordRepository {
 

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import br.com.palavra.database.DailyWordProvider;
-import br.com.palavra.domain.DailyWord;
+import br.com.palavra.domain.model.DailyWord;
 
 public class MainActivity extends Activity implements DailyWordContract.View {
 
