@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import br.com.palavra.database.DailyWordProvider;
 import br.com.palavra.domain.model.DailyWord;
+import br.com.palavra.domain.usecase.GetDailyWords;
+import br.com.palavra.domain.usecase.UseCaseHandler;
 
 public class MainActivity extends Activity implements DailyWordContract.View {
 
@@ -15,7 +17,8 @@ public class MainActivity extends Activity implements DailyWordContract.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mPresenter = new DailyWordPresenter(this, new DailyWordProvider(this));
+        GetDailyWords getDailyWords = new GetDailyWords(new DailyWordProvider(this));
+        mPresenter = new DailyWordPresenter(this, UseCaseHandler.getInstance(), getDailyWords);
     }
 
     @Override
@@ -29,6 +32,5 @@ public class MainActivity extends Activity implements DailyWordContract.View {
         TextView textView = (TextView) findViewById(R.id.text);
         textView.setText(dailyWord.getMessage());
     }
-
 
 }

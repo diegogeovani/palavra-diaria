@@ -1,4 +1,4 @@
-package br.com.palavra.system;
+package br.com.palavra.domain.usecase;
 
 import android.os.Handler;
 
@@ -6,9 +6,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import br.com.palavra.domain.usecase.UseCase;
-import br.com.palavra.domain.usecase.UseCaseScheduler;
 
 /**
  * Executes asynchronous tasks using a {@link ThreadPoolExecutor}.
