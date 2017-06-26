@@ -12,8 +12,13 @@
     tools:context="br.com.palavra.MainActivity">
 
     <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:id="@id/text_daily_word"
+        style="@style/TextView"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center_horizontal"
+        android:textSize="24sp"
+        tools:text="@string/dw_2"/>
 
 </RelativeLayout>
