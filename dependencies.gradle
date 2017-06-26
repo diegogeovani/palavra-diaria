@@ -1,0 +1,20 @@
+ext {
+
+    supportLibrary = '25.1.0'
+    jUnit = '4.12'
+    mockito = '1.10.19'
+
+    appDependencies = [
+            appCompat:                      "com.android.support:appcompat-v7:$supportLibrary"
+    ]
+
+    testDependencies = [
+            jUnit  :                        "junit:junit:$jUnit",
+            mockito:                        "org.mockito:mockito-core:$mockito"
+    ]
+
+    androidTestDependencies = {
+
+    }
+
+}
