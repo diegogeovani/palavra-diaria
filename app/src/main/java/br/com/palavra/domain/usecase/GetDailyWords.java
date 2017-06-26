@@ -6,6 +6,7 @@ import br.com.palavra.domain.model.DailyWord;
 public class GetDailyWords extends UseCase<GetDailyWords.RequestValues, GetDailyWords.ResponseValues> {
 
     private final DailyWordRepository mRepository;
+    private String mGetErrorMessage;
 
     public GetDailyWords(DailyWordRepository repository) {
         mRepository = repository;
@@ -19,6 +20,14 @@ public class GetDailyWords extends UseCase<GetDailyWords.RequestValues, GetDaily
         } else {
             getUseCaseCallback().onSuccess(new ResponseValues(dailyWord));
         }
+    }
+
+    public String getGetErrorMessage() {
+        return mGetErrorMessage;
+    }
+
+    public void setGetErrorMessage(String errorMessage) {
+        mGetErrorMessage = errorMessage;
     }
 
     public static final class RequestValues implements UseCase.RequestValues {

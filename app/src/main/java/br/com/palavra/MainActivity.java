@@ -28,6 +28,11 @@ public class MainActivity extends Activity implements DailyWordContract.View {
     }
 
     @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
     public void showDailyWord(DailyWord dailyWord) {
         TextView textView = (TextView) findViewById(R.id.text);
         textView.setText(dailyWord.getMessage());

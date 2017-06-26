@@ -27,7 +27,7 @@ class DailyWordPresenter implements DailyWordContract.UserActions {
 
             @Override
             public void onError() {
-                // TODO:
+                mView.showError(mGetUseCase.getGetErrorMessage());
             }
         });
     }

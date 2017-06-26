@@ -56,7 +56,7 @@ public class UseCaseHandler {
     }
 
     public <V extends UseCase.ResponseValue> void notifyResponse(final V response,
-            final UseCase.UseCaseCallback<V> useCaseCallback) {
+                                                                 final UseCase.UseCaseCallback<V> useCaseCallback) {
         mUseCaseScheduler.notifyResponse(response, useCaseCallback);
     }
 
@@ -71,7 +71,7 @@ public class UseCaseHandler {
         private final UseCaseHandler mUseCaseHandler;
 
         public UiCallbackWrapper(UseCase.UseCaseCallback<V> callback,
-                UseCaseHandler useCaseHandler) {
+                                 UseCaseHandler useCaseHandler) {
             mCallback = callback;
             mUseCaseHandler = useCaseHandler;
         }
@@ -89,7 +89,7 @@ public class UseCaseHandler {
 
     public static UseCaseHandler getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new UseCaseHandler(new UseCaseThreadPoolScheduler());
+            INSTANCE = new UseCaseHandler(UseCaseThreadPoolScheduler.getInstance());
         }
         return INSTANCE;
     }

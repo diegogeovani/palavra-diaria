@@ -1,41 +1,58 @@
 package br.com.palavra.domain.usecase;
 
-import android.os.Handler;
-
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.Executors;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Executes asynchronous tasks using a {@link ThreadPoolExecutor}.
- * <p>
- * See also {@link Executors} for a list of factory methods to create common
- * {@link java.util.concurrent.ExecutorService}s for different scenarios.
+ * This singleton class will make sure that each use case operation gets a background thread.
+ * <p/>
+ * Created by dmilicic on 7/29/15.
  */
 public class UseCaseThreadPoolScheduler implements UseCaseScheduler {
 
-    public static final int POOL_SIZE = 2;
-    public static final int MAX_POOL_SIZE = 4;
-    public static final int TIMEOUT = 30;
+    // This is a singleton
+    private static volatile UseCaseThreadPoolScheduler sThreadExecutor;
 
-    ThreadPoolExecutor mThreadPoolExecutor;
-    private final Handler mHandler = new Handler();
+    private static final int CORE_POOL_SIZE = 3;
+    private static final int MAX_POOL_SIZE = 5;
+    private static final int KEEP_ALIVE_TIME = 120;
+    private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
+    private static final BlockingQueue<Runnable> WORK_QUEUE = new LinkedBlockingQueue<Runnable>();
 
-    public UseCaseThreadPoolScheduler() {
-        mThreadPoolExecutor = new ThreadPoolExecutor(POOL_SIZE, MAX_POOL_SIZE, TIMEOUT,
-                TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(POOL_SIZE));
+    private ThreadPoolExecutor mThreadPoolExecutor;
+
+    /**
+     * Returns a singleton instance of this executor. If the executor is not initialized then it initializes it and returns
+     * the instance.
+     */
+    public static UseCaseThreadPoolScheduler getInstance() {
+        if (sThreadExecutor == null) {
+            sThreadExecutor = new UseCaseThreadPoolScheduler();
+        }
+
+        return sThreadExecutor;
+    }
+
+    private UseCaseThreadPoolScheduler() {
+        long keepAlive = KEEP_ALIVE_TIME;
+        mThreadPoolExecutor = new ThreadPoolExecutor(
+                CORE_POOL_SIZE,
+                MAX_POOL_SIZE,
+                keepAlive,
+                TIME_UNIT,
+                WORK_QUEUE);
     }
 
     @Override
     public void execute(Runnable runnable) {
-        mThreadPoolExecutor.execute(runnable);
+        mThreadPoolExecutor.submit(runnable);
     }
 
     @Override
-    public <V extends UseCase.ResponseValue> void notifyResponse(final V response,
-                                                                 final UseCase.UseCaseCallback<V> useCaseCallback) {
-        mHandler.post(new Runnable() {
+    public <V extends UseCase.ResponseValue> void notifyResponse(V response, UseCase.UseCaseCallback<V> useCaseCallback) {
+        mThreadPoolExecutor.submit(new Runnable() {
             @Override
             public void run() {
                 useCaseCallback.onSuccess(response);
@@ -44,9 +61,8 @@ public class UseCaseThreadPoolScheduler implements UseCaseScheduler {
     }
 
     @Override
-    public <V extends UseCase.ResponseValue> void onError(
-            final UseCase.UseCaseCallback<V> useCaseCallback) {
-        mHandler.post(new Runnable() {
+    public <V extends UseCase.ResponseValue> void onError(UseCase.UseCaseCallback<V> useCaseCallback) {
+        mThreadPoolExecutor.submit(new Runnable() {
             @Override
             public void run() {
                 useCaseCallback.onError();
