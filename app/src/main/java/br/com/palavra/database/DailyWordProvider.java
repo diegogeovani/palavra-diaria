@@ -16,7 +16,7 @@ public class DailyWordProvider implements DailyWordRepository {
     @Override
     public DailyWord getDailyWord() {
         DailyWord dailyWord = new DailyWord();
-        dailyWord.setMessage(mContext.getString(R.string.app_name));
+        dailyWord.setMessage(mContext.getString(R.string.dw_1));
         return dailyWord;
     }
 
