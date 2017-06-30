@@ -11,14 +11,34 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.com.palavra.MainActivity">
 
-    <TextView
-        android:id="@id/text_daily_word"
-        style="@style/TextView"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:gravity="center_horizontal"
-        android:textSize="24sp"
-        tools:text="@string/dw_2"/>
+    <ScrollView
+        android:id="@id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:id="@+id/viewgroup_main_daily_word"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@id/text_daily_word"
+                style="@style/TextView"
+                android:layout_above="@id/view_anchor"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="32dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:gravity="center_horizontal"
+                android:textSize="24sp"
+                tools:text="@string/dw_2"/>
+
+            <Space
+                android:id="@id/view_anchor"
+                style="@style/Anchor"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- ScrollView -->
+    <item name="scroll" type="id"/>
+
+    <item name="view_anchor" type="id"/>
+
+    <!-- Models -->
     <item name="text_daily_word" type="id"/>
 
 </resources>
