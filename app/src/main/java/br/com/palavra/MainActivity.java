@@ -36,6 +36,8 @@ public class MainActivity extends Activity implements DailyWordContract.View {
     public void showDailyWord(DailyWord dailyWord) {
         TextView textView = (TextView) findViewById(R.id.text_daily_word);
         textView.setText(dailyWord.getMessage());
+        textView = (TextView) findViewById(R.id.text_daily_word_ref);
+        textView.setText(dailyWord.getReference().toString());
     }
 
 }

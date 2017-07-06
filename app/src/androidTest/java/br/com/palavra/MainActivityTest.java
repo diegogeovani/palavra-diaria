@@ -24,11 +24,13 @@ public class MainActivityTest {
     @Test
     public void onCreate_alwaysShowDailyWord() {
         onView(withId(R.id.text_daily_word)).check(matches(withText(not(isEmptyOrNullString()))));
+        onView(withId(R.id.text_daily_word_ref)).check(matches(withText(not(isEmptyOrNullString()))));
     }
 
     @Test
-    public void dailyWordTextView_scrollable() {
+    public void dailyWord_scrollable() {
         onView(withId(R.id.text_daily_word)).check(matches(withParent(withId(R.id.viewgroup_main_daily_word))));
+        onView(withId(R.id.text_daily_word_ref)).check(matches(withParent(withId(R.id.viewgroup_main_daily_word))));
         onView(withId(R.id.viewgroup_main_daily_word)).check(matches(withParent(withId(R.id.scroll))));
     }
 

@@ -8,5 +8,6 @@
 
     <!-- Models -->
     <item name="text_daily_word" type="id"/>
+    <item name="text_daily_word_ref" type="id"/>
 
 </resources>
