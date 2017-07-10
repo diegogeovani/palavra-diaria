@@ -49,23 +49,27 @@ public class Reference {
                 String comma = ",";
                 int previousVerse = 0;
 
-                // 1, 2
-                // i = 1
                 for (int i = 0; i < mVerses.size(); i++) {
-                    // 2
                     int verse = mVerses.get(i);
+                    if (i == 0) {
+                        verses.append(verse);
+                        previousVerse = verse;
+                        continue;
+                    }
+
                     if (verse - previousVerse == 1) {
-                        if (i == 0) {
-                            verses.append(verse);
-                        } else {
-                            verses.append(trace).append(verse);
+                        int traceLastIndex = verses.lastIndexOf(trace);
+                        if (verses.length() > 2 && traceLastIndex >= 0) {
+                            String a = trace + previousVerse;
+                            String b = verses.substring(traceLastIndex, verses.length());
+                            if (a.equals(b)) {
+                                verses.delete(traceLastIndex, verses.length());
+                            }
                         }
+                        verses.append(trace).append(verse);
+
                     } else {
-                        if (i == 0) {
-                            verses.append(verse);
-                        } else {
-                            verses.append(comma).append(verse);
-                        }
+                        verses.append(comma).append(verse);
                     }
                     previousVerse = verse;
                 }
