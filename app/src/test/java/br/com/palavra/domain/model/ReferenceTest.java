@@ -7,10 +7,82 @@ import java.util.Locale;
 import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class ReferenceTest {
 
     private final TreeSet<Integer> mVerses = new TreeSet<>();
+
+    @Test
+    public void toString_bookName() {
+        String bookName = "Atos";
+        Reference reference = new Reference(new Book(bookName));
+        assertEquals("must return book name", bookName, reference.toString());
+    }
+
+    @Test
+    public void toString_chapter() {
+        String bookName = "Atos";
+        Reference reference = new Reference(new Book(bookName));
+        Integer chapter = 7;
+        reference.setChapter(chapter);
+        String expected = bookName + ' ' + chapter;
+        assertEquals("must return expected format", expected, reference.toString());
+    }
+
+    @Test
+    public void toString_completeFormat() {
+        String bookName = "Atos";
+        Reference reference = new Reference(new Book(bookName));
+        Integer chapter = 7;
+        reference.setChapter(chapter);
+        mVerses.add(8);
+        mVerses.add(9);
+        mVerses.add(10);
+        reference.setVerses(mVerses);
+        String expected = String.format(Locale.getDefault(), "%1$s %2$d:%3$s", bookName, chapter,
+                reference.getVersesString());
+        assertEquals("must return expected format", expected, reference.toString());
+    }
+
+    @Test
+    public void toString_completeFormat2() {
+        String bookName = "Atos";
+        Reference reference = new Reference(new Book(bookName));
+        Integer chapter = 15;
+        reference.setChapter(chapter);
+        mVerses.add(11);
+        mVerses.add(15);
+        mVerses.add(104);
+        mVerses.add(105);
+        mVerses.add(106);
+        reference.setVerses(mVerses);
+        String expected = String.format(Locale.getDefault(), "%1$s %2$d:%3$s", bookName, chapter,
+                reference.getVersesString());
+        assertEquals("must return expected format", expected, reference.toString());
+    }
+
+    @Test
+    public void setChapter_negative() {
+        Reference reference = new Reference(new Book("Hebreus"));
+        reference.setChapter(-20);
+        assertNull("must return no chapter", reference.getChapter());
+    }
+
+    @Test
+    public void setChapter_zero() {
+        Reference reference = new Reference(new Book("Hebreus"));
+        reference.setChapter(0);
+        assertNull("must return no chapter", reference.getChapter());
+    }
+
+    @Test
+    public void setChapter_correct() {
+        Reference reference = new Reference(new Book("Hebreus"));
+        Integer expected = 20;
+        reference.setChapter(expected);
+        assertEquals("must return chapter", expected, reference.getChapter());
+    }
 
     @Test
     public void setVerses_negative() {
@@ -68,6 +140,15 @@ public class ReferenceTest {
             }
             i++;
         }
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void getVerses_unmodifiableSet() {
+        Reference reference = new Reference(new Book("Ẽxodo"));
+        mVerses.add(1);
+        mVerses.add(10);
+        reference.setVerses(mVerses);
+        reference.getVerses().remove(0);
     }
 
     @Test
@@ -211,16 +292,6 @@ public class ReferenceTest {
         reference.setVerses(mVerses);
         String expected = String.format(Locale.getDefault(), "%1$d,%2$d-%3$d", verse3, verse1, verse2);
         assertEquals("must return x,y-z sorted format", expected, reference.getVersesString());
-    }
-
-    @Test
-    public void toString_case() {
-        String bookName = "Atos";
-        Reference reference = new Reference(new Book(bookName));
-        reference.setChapter(2);
-        reference.setVerses(mVerses);
-        String expected = bookName + " 2:9";
-        assertEquals("toString must be as expected", expected, reference.toString());
     }
 
     @After

@@ -1,13 +1,14 @@
 package br.com.palavra.domain.model;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class Reference {
 
-    private Book book;
-    private int mChapter;
+    private final Book book;
+    private Integer mChapter;
     private TreeSet<Integer> mVerses;
 
     public Reference(Book book) {
@@ -17,23 +18,23 @@ public class Reference {
     @Override
     public String toString() {
         String reference = "%1$s";
-        if (mChapter > 0) reference += " %2$d";
-        if (mVerses != null && !mVerses.isEmpty()) {
-            // TODO: identify ranges, points and separation between verses
-        }
-        return String.format(reference, book.getName(), mChapter);
+        if (mChapter != null && mChapter > 0) reference += " %2$d";
+        if (mVerses != null && !mVerses.isEmpty()) reference += ":%3$s";
+        return String.format(reference, book.getName(), mChapter, getVersesString());
     }
 
-    public int getChapter() {
+    public Integer getChapter() {
         return mChapter;
     }
 
     public void setChapter(int chapter) {
-        mChapter = chapter;
+        if (chapter > 0) {
+            mChapter = chapter;
+        }
     }
 
     public Set<Integer> getVerses() {
-        return mVerses;
+        return Collections.unmodifiableSortedSet(mVerses);
     }
 
     public void setVerses(TreeSet<Integer> verses) {
