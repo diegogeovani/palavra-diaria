@@ -1,12 +1,14 @@
 package br.com.palavra.domain.model;
 
-import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Reference {
 
     private Book book;
     private int mChapter;
-    private List<Integer> mVerses;
+    private TreeSet<Integer> mVerses;
 
     public Reference(Book book) {
         this.book = book;
@@ -16,7 +18,7 @@ public class Reference {
     public String toString() {
         String reference = "%1$s";
         if (mChapter > 0) reference += " %2$d";
-        if (mVerses != null && mVerses.size() > 0) {
+        if (mVerses != null && !mVerses.isEmpty()) {
             // TODO: identify ranges, points and separation between verses
         }
         return String.format(reference, book.getName(), mChapter);
@@ -30,11 +32,17 @@ public class Reference {
         mChapter = chapter;
     }
 
-    public List<Integer> getVerses() {
+    public Set<Integer> getVerses() {
         return mVerses;
     }
 
-    public void setVerses(List<Integer> verses) {
+    public void setVerses(TreeSet<Integer> verses) {
+        for (Iterator<Integer> iterator = verses.iterator(); iterator.hasNext(); ) {
+            int verse = iterator.next();
+            if (verse <= 0) {
+                iterator.remove();
+            }
+        }
         mVerses = verses;
     }
 
@@ -42,18 +50,19 @@ public class Reference {
         StringBuilder verses = new StringBuilder("");
         if (mVerses != null && !mVerses.isEmpty()) {
             if (mVerses.size() == 1) {
-                return String.valueOf(mVerses.get(0));
+                return String.valueOf(mVerses.first());
 
             } else {
                 String trace = "-";
                 String comma = ",";
                 int previousVerse = 0;
 
-                for (int i = 0; i < mVerses.size(); i++) {
-                    int verse = mVerses.get(i);
+                int i = 0;
+                for (int verse : mVerses) {
                     if (i == 0) {
                         verses.append(verse);
                         previousVerse = verse;
+                        i++;
                         continue;
                     }
 
@@ -72,6 +81,7 @@ public class Reference {
                         verses.append(comma).append(verse);
                     }
                     previousVerse = verse;
+                    i++;
                 }
             }
         }

@@ -3,14 +3,72 @@ package br.com.palavra.domain.model;
 import org.junit.After;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Locale;
+import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
 
 public class ReferenceTest {
 
-    private final ArrayList<Integer> mVerses = new ArrayList<>();
+    private final TreeSet<Integer> mVerses = new TreeSet<>();
+
+    @Test
+    public void setVerses_negative() {
+        Reference reference = new Reference(new Book("Hebreus"));
+        mVerses.add(-1000);
+        reference.setVerses(mVerses);
+        int expected = 0;
+        assertEquals("must not accept negative", expected, reference.getVerses().size());
+    }
+
+    @Test
+    public void setVerses_zero() {
+        Reference reference = new Reference(new Book("Hebreus"));
+        mVerses.add(0);
+        reference.setVerses(mVerses);
+        int expected = 0;
+        assertEquals("must not accept zero", expected, reference.getVerses().size());
+    }
+
+    @Test
+    public void setVerses_duplicated() {
+        Reference reference = new Reference(new Book("Hebreus"));
+        int verse = 3;
+        mVerses.add(verse);
+        mVerses.add(verse);
+        mVerses.add(verse);
+        reference.setVerses(mVerses);
+        int expected = 1;
+        assertEquals("must not accept duplicated", expected, reference.getVerses().size());
+    }
+
+    @Test
+    public void setVerses_unsorted() {
+        Reference reference = new Reference(new Book("Hebreus"));
+        int verseB = 30;
+        mVerses.add(verseB);
+        int verseC = 115;
+        mVerses.add(verseC);
+        int verseA = 2;
+        mVerses.add(verseA);
+        reference.setVerses(mVerses);
+
+        int i = 0;
+        for (int verse : reference.getVerses()) {
+            switch (i) {
+                case 0:
+                    assertEquals("must be in order", verseA, verse);
+                    break;
+                case 1:
+                    assertEquals("must be in order", verseB, verse);
+                    break;
+                case 2:
+                    assertEquals("must be in order", verseC, verse);
+                    break;
+            }
+            i++;
+        }
+    }
 
     @Test
     public void getVersesString_noVerses() {
@@ -138,7 +196,21 @@ public class ReferenceTest {
         reference.setVerses(mVerses);
         String expected = String.format(Locale.getDefault(), "%1$d,%2$d,%3$d-%4$d,%5$d,%6$d", verseA, verseB,
                 mockVerse, mockVerse4, mockVerse2, mockVerse3);
-        assertEquals("must return w,x-y,z format", expected, reference.getVersesString());
+        assertEquals("must return u,v,w-x,y,d format", expected, reference.getVersesString());
+    }
+
+    @Test
+    public void getVersesString_unsorted() {
+        Reference reference = new Reference(new Book("Salmos"));
+        int verse1 = 99;
+        mVerses.add(verse1);
+        int verse2 = 100;
+        mVerses.add(verse2);
+        int verse3 = 2;
+        mVerses.add(verse3);
+        reference.setVerses(mVerses);
+        String expected = String.format(Locale.getDefault(), "%1$d,%2$d-%3$d", verse3, verse1, verse2);
+        assertEquals("must return x,y-z sorted format", expected, reference.getVersesString());
     }
 
     @Test
