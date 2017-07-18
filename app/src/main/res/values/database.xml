@@ -1,6 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="pt-br">
 
-    <string name="dw_1">O nosso Deus é o Deus da salvação; e a Jeová, o Senhor, pertencem as saídas da morte.</string>
-    <string name="dw_2">Jesus Cristo é o mesmo ontem, e hoje,  e eternamente.</string>
+    <!-- Books -->
+    <string name="book_psalms">Salmos</string>
+    <string name="book_hebrews">Hebreus</string>
+
+    <string name="daily_word_psalms_68_20">O nosso Deus é o Deus da salvação; e a Jeová, o Senhor, pertencem as saídas da morte.</string>
+    <string name="daily_word_hebrews_13_8">Jesus Cristo é o mesmo ontem, e hoje,  e eternamente.</string>
 
 </resources>

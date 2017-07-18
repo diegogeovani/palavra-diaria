@@ -3,13 +3,13 @@ package br.com.palavra.domain.model;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.SortedSet;
 
 public class Reference {
 
     private final Book book;
     private Integer mChapter;
-    private TreeSet<Integer> mVerses;
+    private SortedSet<Integer> mVerses;
 
     public Reference(Book book) {
         this.book = book;
@@ -37,7 +37,7 @@ public class Reference {
         return Collections.unmodifiableSortedSet(mVerses);
     }
 
-    public void setVerses(TreeSet<Integer> verses) {
+    public void setVerses(SortedSet<Integer> verses) {
         for (Iterator<Integer> iterator = verses.iterator(); iterator.hasNext(); ) {
             int verse = iterator.next();
             if (verse <= 0) {

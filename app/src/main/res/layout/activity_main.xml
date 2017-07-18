@@ -32,7 +32,7 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:gravity="center_horizontal"
                 android:textSize="22dp"
-                tools:text="@string/dw_2"/>
+                tools:text="@string/daily_word_hebrews_13_8"/>
 
             <TextView
                 android:id="@id/text_daily_word_ref"
