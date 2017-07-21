@@ -8,8 +8,13 @@ import br.com.palavra.database.DailyWordProvider;
 import br.com.palavra.domain.model.DailyWord;
 import br.com.palavra.domain.usecase.GetDailyWords;
 import br.com.palavra.domain.usecase.UseCaseHandler;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends Activity implements DailyWordContract.View {
+
+    @BindView(R.id.text_daily_word) TextView mDailyWordText;
+    @BindView(R.id.text_daily_word_ref) TextView mReferenceText;
 
     private DailyWordPresenter mPresenter;
 
@@ -17,6 +22,7 @@ public class MainActivity extends Activity implements DailyWordContract.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         GetDailyWords getDailyWords = new GetDailyWords(new DailyWordProvider(this));
         mPresenter = new DailyWordPresenter(this, UseCaseHandler.getInstance(), getDailyWords);
     }
@@ -34,10 +40,8 @@ public class MainActivity extends Activity implements DailyWordContract.View {
 
     @Override
     public void showDailyWord(DailyWord dailyWord) {
-        TextView textView = (TextView) findViewById(R.id.text_daily_word);
-        textView.setText(dailyWord.getMessage());
-        textView = (TextView) findViewById(R.id.text_daily_word_ref);
-        textView.setText(dailyWord.getReference().toString());
+        mDailyWordText.setText(dailyWord.getMessage());
+        mReferenceText.setText(dailyWord.getReference().toString());
     }
 
 }
