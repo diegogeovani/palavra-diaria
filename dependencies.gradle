@@ -1,11 +1,17 @@
 ext {
 
     supportLibrary = '25.1.0'
+
+    butterKnife = '8.7.0'
+
     jUnit = '4.12'
     mockito = '1.10.19'
 
     appDependencies = [
-            appCompat:                      "com.android.support:appcompat-v7:$supportLibrary"
+            appCompat:                      "com.android.support:appcompat-v7:$supportLibrary",
+            annotations:                    "com.android.support:support-annotations:$supportLibrary",
+            butterKnife:                    "com.jakewharton:butterknife:$butterKnife",
+            butterKnifeCompiler:            "com.jakewharton:butterknife-compiler:$butterKnife"
     ]
 
     testDependencies = [
@@ -13,8 +19,7 @@ ext {
             mockito:                        "org.mockito:mockito-core:$mockito"
     ]
 
-    androidTestDependencies = {
-
-    }
+    androidTestDependencies = [
+    ]
 
 }
