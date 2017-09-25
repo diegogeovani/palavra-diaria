@@ -3,11 +3,16 @@ package br.com.palavra.domain.model;
 import org.junit.After;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+
 
 public class ReferenceTest {
 
@@ -292,6 +297,37 @@ public class ReferenceTest {
         reference.setVerses(mVerses);
         String expected = String.format(Locale.getDefault(), "%1$d,%2$d-%3$d", verse3, verse1, verse2);
         assertEquals("must return x,y-z sorted format", expected, reference.getVersesString());
+    }
+
+    @Test
+    public void getVersesString_parts() {
+        Reference reference = new Reference(new Book("Eclesiastes"));
+        char part = 'a';
+        TreeSet<Character> parts = new TreeSet<>();
+        parts.add(part);
+        int verse = 3;
+        SortedMap<Integer, SortedSet<Character>> verses = new TreeMap<>();
+        verses.put(verse, parts);
+        int verse2 = 4;
+        verses.put(verse2, null);
+        reference.setVerses(verses);
+        String expected = String.format(Locale.getDefault(), "%1$d%2$s-%3$d", verse, part, verse2);
+        assertEquals("must return xy format", expected, reference.getVersesString());
+    }
+
+    @Test
+    public void getVersesString_parts2() {
+        Reference reference = new Reference(new Book("Eclesiastes"));
+        SortedMap<Integer, SortedSet<Character>> verses = new TreeMap<>();
+        verses.put(3, new TreeSet<>(Arrays.asList(new Character[]{'a'})));
+        verses.put(4, null);
+        verses.put(5, null);
+        verses.put(7, new TreeSet<>(Arrays.asList(new Character[]{'c', 'd'})));
+        verses.put(8, null);
+        reference.setVerses(verses);
+
+        String expected = "3a-5,7cd-8";
+        assertEquals(expected, reference.getVersesString());
     }
 
     @After

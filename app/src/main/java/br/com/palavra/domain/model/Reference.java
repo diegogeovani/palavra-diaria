@@ -1,15 +1,21 @@
 package br.com.palavra.domain.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Stream;
 
 public class Reference {
 
     private final Book book;
     private Integer mChapter;
     private SortedSet<Integer> mVerses;
+    private List<SortedSet<Character>> mVersesParts;
 
     public Reference(Book book) {
         this.book = book;
@@ -33,7 +39,7 @@ public class Reference {
         }
     }
 
-    public Set<Integer> getVerses() {
+    public SortedSet<Integer> getVerses() {
         return Collections.unmodifiableSortedSet(mVerses);
     }
 
@@ -47,46 +53,89 @@ public class Reference {
         mVerses = verses;
     }
 
+    public void setVerses(SortedMap<Integer, SortedSet<Character>> verses) {
+        TreeSet<Integer> verseSet = new TreeSet<>();
+        ArrayList<SortedSet<Character>> versesParts = new ArrayList<>();
+
+        for (Iterator<Map.Entry<Integer, SortedSet<Character>>> verseIterator = verses.entrySet().iterator();
+             verseIterator.hasNext(); ) {
+            Map.Entry<Integer, SortedSet<Character>> entry = verseIterator.next();
+            int verse = entry.getKey();
+
+            if (verse <= 0) {
+                verseIterator.remove();
+
+            } else {
+                SortedSet<Character> parts = entry.getValue();
+                if (parts != null) {
+                    for (Iterator<Character> partIterator = parts.iterator(); partIterator.hasNext(); ) {
+                        char part = partIterator.next();
+                        if (!Character.isLetter(part)) {
+                            partIterator.remove();
+                        }
+                    }
+                }
+                verseSet.add(verse);
+                versesParts.add(parts);
+            }
+
+            if (verseSet.size() == versesParts.size()) {
+                mVerses = verseSet;
+                mVersesParts = versesParts;
+            } else {
+                // TODO: exception
+                throw new IllegalStateException("TODO");
+            }
+        }
+    }
+
     public String getVersesString() {
         StringBuilder verses = new StringBuilder("");
         if (mVerses != null && !mVerses.isEmpty()) {
-            if (mVerses.size() == 1) {
-                return String.valueOf(mVerses.first());
+            String trace = "-";
+            String comma = ",";
+            int previousVerse = 0;
 
-            } else {
-                String trace = "-";
-                String comma = ",";
-                int previousVerse = 0;
-
-                int i = 0;
-                for (int verse : mVerses) {
-                    if (i == 0) {
-                        verses.append(verse);
-                        previousVerse = verse;
-                        i++;
-                        continue;
-                    }
-
-                    if (verse - previousVerse == 1) {
-                        int traceLastIndex = verses.lastIndexOf(trace);
-                        if (verses.length() > 2 && traceLastIndex >= 0) {
-                            String a = trace + previousVerse;
-                            String b = verses.substring(traceLastIndex, verses.length());
-                            if (a.equals(b)) {
-                                verses.delete(traceLastIndex, verses.length());
-                            }
-                        }
-                        verses.append(trace).append(verse);
-
-                    } else {
-                        verses.append(comma).append(verse);
-                    }
+            int i = 0;
+            for (int verse : mVerses) {
+                if (i == 0) {
+                    verses.append(verse);
+                    appendVerseParts(verses, 0);
                     previousVerse = verse;
                     i++;
+                    continue;
                 }
+
+                if (verse - previousVerse == 1) {
+                    int traceLastIndex = verses.lastIndexOf(trace);
+                    if (verses.length() > 2 && traceLastIndex >= 0) {
+                        String a = trace + previousVerse;
+                        String b = verses.substring(traceLastIndex, verses.length());
+                        if (a.equals(b)) {
+                            verses.delete(traceLastIndex, verses.length());
+                        }
+                    }
+                    verses.append(trace).append(verse);
+                    appendVerseParts(verses, i);
+
+                } else {
+                    verses.append(comma).append(verse);
+                    appendVerseParts(verses, i);
+                }
+                previousVerse = verse;
+                i++;
             }
         }
         return verses.toString();
+    }
+
+    private void appendVerseParts(StringBuilder stringBuilder, int verseIndex) {
+        if (mVersesParts != null) {
+            SortedSet<Character> parts = mVersesParts.get(verseIndex);
+            if (parts != null) {
+                parts.forEach(stringBuilder::append);
+            }
+        }
     }
 
 }
