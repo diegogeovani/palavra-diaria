@@ -3,6 +3,7 @@ ext {
     supportLibrary = '25.1.0'
 
     butterKnife = '8.7.0'
+    constraintLayout = '1.0.2'
 
     jUnit = '4.12'
     mockito = '1.10.19'
@@ -11,7 +12,8 @@ ext {
             appCompat:                      "com.android.support:appcompat-v7:$supportLibrary",
             annotations:                    "com.android.support:support-annotations:$supportLibrary",
             butterKnife:                    "com.jakewharton:butterknife:$butterKnife",
-            butterKnifeCompiler:            "com.jakewharton:butterknife-compiler:$butterKnife"
+            butterKnifeCompiler:            "com.jakewharton:butterknife-compiler:$butterKnife",
+            constraintLayout:               "com.android.support.constraint:constraint-layout:$constraintLayout"
     ]
 
     testDependencies = [

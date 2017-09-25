@@ -26,10 +26,17 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url 'https://maven.google.com'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile appDependencies.annotations
     compile appDependencies.butterKnife
+    compile appDependencies.constraintLayout
 
     annotationProcessor appDependencies.butterKnifeCompiler
 }
