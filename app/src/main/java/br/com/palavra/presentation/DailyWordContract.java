@@ -1,4 +1,4 @@
-package br.com.palavra;
+package br.com.palavra.presentation;
 
 import br.com.palavra.domain.model.DailyWord;
 import br.com.palavra.presentation.ui.BaseView;

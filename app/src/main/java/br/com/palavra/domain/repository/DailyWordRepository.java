@@ -1,4 +1,4 @@
-package br.com.palavra.database;
+package br.com.palavra.domain.repository;
 
 import br.com.palavra.domain.model.DailyWord;
 

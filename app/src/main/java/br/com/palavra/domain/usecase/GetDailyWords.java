@@ -1,6 +1,6 @@
 package br.com.palavra.domain.usecase;
 
-import br.com.palavra.database.DailyWordRepository;
+import br.com.palavra.domain.repository.DailyWordRepository;
 import br.com.palavra.domain.model.DailyWord;
 
 public class GetDailyWords extends UseCase<GetDailyWords.RequestValues, GetDailyWords.ResponseValues> {

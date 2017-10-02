@@ -1,16 +1,16 @@
-package br.com.palavra;
+package br.com.palavra.presentation;
 
 import br.com.palavra.domain.usecase.GetDailyWords;
 import br.com.palavra.domain.usecase.UseCase;
 import br.com.palavra.domain.usecase.UseCaseHandler;
 
-class DailyWordPresenter implements DailyWordContract.UserActions {
+public class DailyWordPresenter implements DailyWordContract.UserActions {
 
     private final DailyWordContract.View mView;
     private final UseCaseHandler mUseCaseHandler;
     private final GetDailyWords mGetUseCase;
 
-    DailyWordPresenter(DailyWordContract.View view, UseCaseHandler useCaseHandler, GetDailyWords getUseCase) {
+    public DailyWordPresenter(DailyWordContract.View view, UseCaseHandler useCaseHandler, GetDailyWords getUseCase) {
         mView = view;
         mUseCaseHandler = useCaseHandler;
         mGetUseCase = getUseCase;

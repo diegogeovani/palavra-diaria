@@ -5,10 +5,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.com.palavra.database.DailyWordRepository;
+import br.com.palavra.domain.repository.DailyWordRepository;
 import br.com.palavra.domain.model.DailyWord;
 import br.com.palavra.domain.usecase.GetDailyWords;
 import br.com.palavra.domain.usecase.UseCaseHandler;
+import br.com.palavra.presentation.DailyWordContract;
+import br.com.palavra.presentation.DailyWordPresenter;
 import br.com.palavra.test.TestUseCaseThreadPoolScheduler;
 
 import static org.mockito.Mockito.times;
