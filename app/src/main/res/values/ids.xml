@@ -6,6 +6,9 @@
 
     <item name="view_anchor" type="id"/>
 
+    <!-- Button -->
+    <item name="button_next" type="id"/>
+
     <!-- Models -->
     <item name="text_daily_word" type="id"/>
     <item name="text_daily_word_ref" type="id"/>

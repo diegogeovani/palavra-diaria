@@ -1,5 +1,6 @@
 package br.com.palavra;
 
+import android.support.test.espresso.action.GeneralClickAction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.TypedValue;
@@ -12,6 +13,7 @@ import org.junit.runner.RunWith;
 import br.com.palavra.presentation.ui.activity.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
@@ -25,12 +27,6 @@ public class MainActivityTest {
 
     @Rule public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
             MainActivity.class, false, true);
-
-    @Test
-    public void onCreate_alwaysShowDailyWord() {
-        onView(withId(R.id.text_daily_word)).check(matches(withText(not(isEmptyOrNullString()))));
-        onView(withId(R.id.text_daily_word_ref)).check(matches(withText(not(isEmptyOrNullString()))));
-    }
 
     @Test
     public void dailyWord_scrollable() {
@@ -53,6 +49,15 @@ public class MainActivityTest {
         expected = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14,
                 activity.getResources().getDisplayMetrics());
         assertEquals("must be the default size", expected, refTextSize, 0);
+    }
+
+    @Test
+    public void nextButtonClickEventMustChangeDailyWord() {
+        onView(withId(R.id.text_daily_word)).check(matches(withText(not(isEmptyOrNullString()))));
+        onView(withId(R.id.text_daily_word_ref)).check(matches(withText(not(isEmptyOrNullString()))));
+        onView(withId(R.id.button_next)).perform(click());
+        onView(withId(R.id.text_daily_word)).check(matches(withText(not(isEmptyOrNullString()))));
+        onView(withId(R.id.text_daily_word_ref)).check(matches(withText(not(isEmptyOrNullString()))));
     }
 
 }
