@@ -36,11 +36,10 @@ public class UseCaseThreadPoolScheduler implements UseCaseScheduler {
     }
 
     private UseCaseThreadPoolScheduler() {
-        long keepAlive = KEEP_ALIVE_TIME;
         mThreadPoolExecutor = new ThreadPoolExecutor(
                 CORE_POOL_SIZE,
                 MAX_POOL_SIZE,
-                keepAlive,
+                KEEP_ALIVE_TIME,
                 TIME_UNIT,
                 WORK_QUEUE);
     }

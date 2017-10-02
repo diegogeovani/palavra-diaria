@@ -31,7 +31,8 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:gravity="center_horizontal"
                 android:textSize="20dp"
-                tools:text="@string/daily_word_hebrews_13_8" />
+                tools:text="@string/daily_word_hebrews_13_8"
+                tools:ignore="SpUsage" />
 
             <Space
                 android:id="@id/view_anchor"
@@ -45,7 +46,8 @@
                 android:layout_below="@id/view_anchor"
                 android:textSize="14dp"
                 android:textStyle="italic"
-                tools:text="Hebreus 13:8" />
+                tools:text="Hebreus 13:8"
+                tools:ignore="SpUsage" />
         </RelativeLayout>
     </ScrollView>
 
