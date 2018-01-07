@@ -1,4 +1,4 @@
-package br.com.palavra.domain.usecase;
+package br.com.palavra.domain;
 
 public interface UseCaseScheduler {
 

@@ -1,7 +1,7 @@
 package br.com.palavra.test;
 
-import br.com.palavra.domain.usecase.UseCase;
-import br.com.palavra.domain.usecase.UseCaseScheduler;
+import br.com.palavra.domain.UseCase;
+import br.com.palavra.domain.UseCaseScheduler;
 
 public final class TestUseCaseThreadPoolScheduler implements UseCaseScheduler {
 

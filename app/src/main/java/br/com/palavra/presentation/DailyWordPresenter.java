@@ -1,8 +1,8 @@
 package br.com.palavra.presentation;
 
-import br.com.palavra.domain.usecase.GetDailyWords;
-import br.com.palavra.domain.usecase.UseCase;
-import br.com.palavra.domain.usecase.UseCaseHandler;
+import br.com.palavra.domain.word.GetDailyWords;
+import br.com.palavra.domain.UseCase;
+import br.com.palavra.domain.async.UseCaseHandler;
 
 public class DailyWordPresenter implements DailyWordContract.UserActions {
 

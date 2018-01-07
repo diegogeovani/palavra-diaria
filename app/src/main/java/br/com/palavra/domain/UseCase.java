@@ -1,4 +1,4 @@
-package br.com.palavra.domain.usecase;
+package br.com.palavra.domain;
 
 /**
  * Use cases are the entry points to the domain layer.
@@ -20,15 +20,15 @@ public abstract class UseCase<Q extends UseCase.RequestValues, P extends UseCase
         mRequestValues = requestValues;
     }
 
-    public void setUseCaseCallback(UseCaseCallback<P> useCaseCallback) {
-        mUseCaseCallback = useCaseCallback;
-    }
-
     public UseCaseCallback<P> getUseCaseCallback() {
         return mUseCaseCallback;
     }
 
-    void run() {
+    public void setUseCaseCallback(UseCaseCallback<P> useCaseCallback) {
+        mUseCaseCallback = useCaseCallback;
+    }
+
+    public void run() {
         executeUseCase(mRequestValues);
     }
 
