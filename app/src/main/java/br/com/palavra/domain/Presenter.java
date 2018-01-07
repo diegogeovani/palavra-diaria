@@ -1,4 +1,4 @@
-package br.com.palavra.presentation;
+package br.com.palavra.domain;
 
 public interface Presenter {
 

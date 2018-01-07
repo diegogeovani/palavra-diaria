@@ -1,4 +1,4 @@
-package br.com.palavra.presentation.ui;
+package br.com.palavra.domain;
 
 public interface BaseView {
 

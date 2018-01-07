@@ -1,6 +1,5 @@
 package br.com.palavra;
 
-import android.support.test.espresso.action.GeneralClickAction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.TypedValue;
@@ -10,7 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import br.com.palavra.presentation.ui.activity.MainActivity;
+import br.com.palavra.ui.activity.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

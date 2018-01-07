@@ -1,5 +1,6 @@
-package br.com.palavra.presentation;
+package br.com.palavra.ui.presentation;
 
+import br.com.palavra.domain.word.DailyWordContract;
 import br.com.palavra.domain.word.GetDailyWords;
 import br.com.palavra.domain.UseCase;
 import br.com.palavra.domain.async.UseCaseHandler;

@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.util.Locale;
 
+import br.com.palavra.domain.util.CountrySettings;
+
 import static org.junit.Assert.assertEquals;
 
 public class CountrySettingsTest {

@@ -1,4 +1,4 @@
-package br.com.palavra.util;
+package br.com.palavra.domain.util;
 
 import java.util.Locale;
 

@@ -1,4 +1,4 @@
-package br.com.palavra.presentation.ui.activity;
+package br.com.palavra.ui.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import br.com.palavra.data.DailyWordProvider;
 import br.com.palavra.domain.model.DailyWord;
 import br.com.palavra.domain.word.GetDailyWords;
 import br.com.palavra.domain.async.UseCaseHandler;
-import br.com.palavra.presentation.DailyWordContract;
-import br.com.palavra.presentation.DailyWordPresenter;
+import br.com.palavra.domain.word.DailyWordContract;
+import br.com.palavra.ui.presentation.DailyWordPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

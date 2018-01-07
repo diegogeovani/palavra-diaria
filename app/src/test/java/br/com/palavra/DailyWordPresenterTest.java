@@ -9,8 +9,8 @@ import br.com.palavra.domain.repository.DailyWordRepository;
 import br.com.palavra.domain.model.DailyWord;
 import br.com.palavra.domain.word.GetDailyWords;
 import br.com.palavra.domain.async.UseCaseHandler;
-import br.com.palavra.presentation.DailyWordContract;
-import br.com.palavra.presentation.DailyWordPresenter;
+import br.com.palavra.domain.word.DailyWordContract;
+import br.com.palavra.ui.presentation.DailyWordPresenter;
 import br.com.palavra.test.TestUseCaseThreadPoolScheduler;
 
 import static org.mockito.Mockito.times;
