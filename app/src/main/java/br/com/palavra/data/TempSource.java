@@ -1,4 +1,4 @@
-package br.com.palavra.database;
+package br.com.palavra.data;
 
 import android.content.Context;
 

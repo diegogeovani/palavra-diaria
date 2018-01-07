@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import br.com.palavra.R;
-import br.com.palavra.database.DailyWordProvider;
+import br.com.palavra.data.DailyWordProvider;
 import br.com.palavra.domain.model.DailyWord;
 import br.com.palavra.domain.word.GetDailyWords;
 import br.com.palavra.domain.async.UseCaseHandler;
