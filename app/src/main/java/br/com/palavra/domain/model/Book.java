@@ -5,10 +5,10 @@ import java.util.List;
 public class Book {
 
     private String mName;
-    private Testament testament;
+    private Testament mTestament;
     private int mChaptersNumber;
-    private List<String> authors;
-    private String description;
+    private List<String> mAuthors;
+    private String mDescription;
 
     public Book(String name) {
         mName = name;
@@ -16,15 +16,11 @@ public class Book {
 
     public Book(String name, Testament testament) {
         mName = name;
-        this.testament = testament;
+        mTestament = testament;
     }
 
     public String getName() {
         return mName;
-    }
-
-    public int getChaptersNumber() {
-        return mChaptersNumber;
     }
 
     public void setChaptersNumber(int chaptersNumber) {

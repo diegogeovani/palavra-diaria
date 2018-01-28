@@ -13,6 +13,7 @@ import br.com.palavra.domain.model.DailyWord;
 import br.com.palavra.domain.model.Reference;
 import br.com.palavra.domain.model.Testament;
 
+// TODO: temporary
 final class TempSource {
 
     private TempSource() {

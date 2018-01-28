@@ -11,13 +11,13 @@ import java.util.TreeSet;
 
 public class Reference {
 
-    private final Book book;
+    private final Book mBook;
     private Integer mChapter;
     private SortedSet<Integer> mVerses;
     private List<SortedSet<Character>> mVersesParts;
 
     public Reference(Book book) {
-        this.book = book;
+        this.mBook = book;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Reference {
         String reference = "%1$s";
         if (mChapter != null && mChapter > 0) reference += " %2$d";
         if (mVerses != null && !mVerses.isEmpty()) reference += ":%3$s";
-        return String.format(reference, book.getName(), mChapter, getVersesString());
+        return String.format(reference, mBook.getName(), mChapter, getVersesString());
     }
 
     public Integer getChapter() {
