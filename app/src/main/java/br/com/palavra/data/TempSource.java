@@ -3,7 +3,7 @@ package br.com.palavra.data;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -27,7 +27,7 @@ final class TempSource {
         book.setChaptersNumber(150);
         Reference ref = new Reference(book);
         ref.setChapter(68);
-        ref.setVerses(new TreeSet<>(Arrays.asList(new Integer[]{20})));
+        ref.setVerses(new TreeSet<>(Collections.singletonList(20)));
         DailyWord dw = new DailyWord();
         dw.setMessage(context.getString(R.string.daily_word_psalms_68_20));
         dw.setReference(ref);
@@ -37,7 +37,7 @@ final class TempSource {
         book.setChaptersNumber(13);
         ref = new Reference(book);
         ref.setChapter(13);
-        ref.setVerses(new TreeSet<>(Arrays.asList(new Integer[]{8})));
+        ref.setVerses(new TreeSet<>(Collections.singletonList(8)));
         dw = new DailyWord();
         dw.setMessage(context.getString(R.string.book_hebrews));
         dw.setReference(ref);

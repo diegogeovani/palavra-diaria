@@ -26,30 +26,24 @@ public class UseCaseHandler {
     public <T extends UseCase.RequestValues, R extends UseCase.ResponseValue> void execute(
             final UseCase<T, R> useCase, T values, UseCase.UseCaseCallback<R> callback) {
         useCase.setRequestValues(values);
-        useCase.setUseCaseCallback(new UiCallbackWrapper(callback, this));
+        useCase.setUseCaseCallback(new UiCallbackWrapper<>(callback, this));
 
         // The network request might be handled in a different thread so make sure
         // Espresso knows
         // that the app is busy until the response is handled.
         //EspressoIdlingResource.increment(); // App is busy until further notice
 
-        mUseCaseScheduler.execute(new Runnable() {
-            @Override
-            public void run() {
-
-                useCase.run();
 /*                // This callback may be called twice, once for the cache and once for loading
-                // the data from the server API, so we check before decrementing, otherwise
-                // it throws "Counter has been corrupted!" exception.
-                if (!EspressoIdlingResource.getIdlingResource().isIdleNow()) {
-                    EspressoIdlingResource.decrement(); // Set app as idle.
-                }*/
-            }
-        });
+            // the data from the server API, so we check before decrementing, otherwise
+            // it throws "Counter has been corrupted!" exception.
+            if (!EspressoIdlingResource.getIdlingResource().isIdleNow()) {
+                EspressoIdlingResource.decrement(); // Set app as idle.
+            }*/
+        mUseCaseScheduler.execute(useCase::run);
     }
 
-    public <V extends UseCase.ResponseValue> void notifyResponse(final V response,
-                                                                 final UseCase.UseCaseCallback<V> useCaseCallback) {
+    public <V extends UseCase.ResponseValue> void notifyResponse(V response,
+                                                                 UseCase.UseCaseCallback<V> useCaseCallback) {
         mUseCaseScheduler.notifyResponse(response, useCaseCallback);
     }
 

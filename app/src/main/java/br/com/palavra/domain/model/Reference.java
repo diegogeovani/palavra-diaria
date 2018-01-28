@@ -42,16 +42,6 @@ public class Reference {
         return Collections.unmodifiableSortedSet(mVerses);
     }
 
-    public void setVerses(SortedSet<Integer> verses) {
-        for (Iterator<Integer> iterator = verses.iterator(); iterator.hasNext(); ) {
-            int verse = iterator.next();
-            if (verse <= 0) {
-                iterator.remove();
-            }
-        }
-        mVerses = verses;
-    }
-
     public void setVerses(SortedMap<Integer, SortedSet<Character>> verses) {
         TreeSet<Integer> verseSet = new TreeSet<>();
         ArrayList<SortedSet<Character>> versesParts = new ArrayList<>();
@@ -86,6 +76,16 @@ public class Reference {
                 throw new IllegalStateException("TODO");
             }
         }
+    }
+
+    public void setVerses(SortedSet<Integer> verses) {
+        for (Iterator<Integer> iterator = verses.iterator(); iterator.hasNext(); ) {
+            int verse = iterator.next();
+            if (verse <= 0) {
+                iterator.remove();
+            }
+        }
+        mVerses = verses;
     }
 
     public String getVersesString() {
@@ -128,11 +128,13 @@ public class Reference {
         return verses.toString();
     }
 
-    private void appendVerseParts(StringBuilder stringBuilder, int verseIndex) {
+    private void appendVerseParts(StringBuilder sb, int verseIndex) {
         if (mVersesParts != null) {
             SortedSet<Character> parts = mVersesParts.get(verseIndex);
             if (parts != null) {
-                parts.forEach(stringBuilder::append);
+                for (Character p : parts) {
+                    sb.append(p);
+                }
             }
         }
     }

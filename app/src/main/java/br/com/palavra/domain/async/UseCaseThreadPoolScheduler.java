@@ -19,7 +19,7 @@ public class UseCaseThreadPoolScheduler implements UseCaseScheduler {
     private static final int MAX_POOL_SIZE = 5;
     private static final int KEEP_ALIVE_TIME = 120;
     private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
-    private static final BlockingQueue<Runnable> WORK_QUEUE = new LinkedBlockingQueue<Runnable>();
+    private static final BlockingQueue<Runnable> WORK_QUEUE = new LinkedBlockingQueue<>();
     // This is a singleton
     private static volatile UseCaseThreadPoolScheduler sThreadExecutor;
     private ThreadPoolExecutor mThreadPoolExecutor;
@@ -52,22 +52,12 @@ public class UseCaseThreadPoolScheduler implements UseCaseScheduler {
 
     @Override
     public <V extends UseCase.ResponseValue> void notifyResponse(V response, UseCase.UseCaseCallback<V> useCaseCallback) {
-        mThreadPoolExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                useCaseCallback.onSuccess(response);
-            }
-        });
+        mThreadPoolExecutor.submit(() -> useCaseCallback.onSuccess(response));
     }
 
     @Override
     public <V extends UseCase.ResponseValue> void onError(UseCase.UseCaseCallback<V> useCaseCallback) {
-        mThreadPoolExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                useCaseCallback.onError();
-            }
-        });
+        mThreadPoolExecutor.submit(useCaseCallback::onError);
     }
 
 }

@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -319,10 +320,10 @@ public class ReferenceTest {
     public void getVersesString_parts2() {
         Reference reference = new Reference(new Book("Eclesiastes"));
         SortedMap<Integer, SortedSet<Character>> verses = new TreeMap<>();
-        verses.put(3, new TreeSet<>(Arrays.asList(new Character[]{'a'})));
+        verses.put(3, new TreeSet<>(Collections.singletonList('a')));
         verses.put(4, null);
         verses.put(5, null);
-        verses.put(7, new TreeSet<>(Arrays.asList(new Character[]{'c', 'd'})));
+        verses.put(7, new TreeSet<>(Arrays.asList('c', 'd')));
         verses.put(8, null);
         reference.setVerses(verses);
 
