@@ -1,14 +1,17 @@
 package br.com.palavra.domain.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Book {
 
     private String mName;
     private Testament mTestament;
-    private int mChaptersNumber;
-    private List<String> mAuthors;
+    private int mChaptersCount;
     private String mDescription;
+    private LocalDate mApproximateYearOfWriting;
+    private Translation mTranslation;
+    private List<Author> mAuthors;
 
     public Book(String name) {
         mName = name;
@@ -23,8 +26,8 @@ public class Book {
         return mName;
     }
 
-    public void setChaptersNumber(int chaptersNumber) {
-        mChaptersNumber = chaptersNumber;
+    public void setChaptersCount(int chaptersCount) {
+        mChaptersCount = chaptersCount;
     }
 
 }

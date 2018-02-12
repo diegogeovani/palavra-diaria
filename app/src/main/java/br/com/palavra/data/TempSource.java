@@ -24,7 +24,7 @@ final class TempSource {
         ArrayList<DailyWord> dailyWords = new ArrayList<>();
 
         Book book = new Book(context.getString(R.string.book_psalms), Testament.OLD);
-        book.setChaptersNumber(150);
+        book.setChaptersCount(150);
         Reference ref = new Reference(book);
         ref.setChapter(68);
         ref.setVerses(new TreeSet<>(Collections.singletonList(20)));
@@ -34,7 +34,7 @@ final class TempSource {
         dailyWords.add(dw);
 
         book = new Book(context.getString(R.string.book_hebrews), Testament.NEW);
-        book.setChaptersNumber(13);
+        book.setChaptersCount(13);
         ref = new Reference(book);
         ref.setChapter(13);
         ref.setVerses(new TreeSet<>(Collections.singletonList(8)));
