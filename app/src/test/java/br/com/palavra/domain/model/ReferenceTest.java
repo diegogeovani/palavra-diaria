@@ -1,23 +1,13 @@
 package br.com.palavra.domain.model;
 
-import org.junit.After;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Locale;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-
 public class ReferenceTest {
-
-    private final TreeSet<Integer> mVerses = new TreeSet<>();
 
     @Test
     public void toString_bookName() {
@@ -42,10 +32,9 @@ public class ReferenceTest {
         Reference reference = new Reference(new Book(bookName));
         Integer chapter = 7;
         reference.setChapter(chapter);
-        mVerses.add(8);
-        mVerses.add(9);
-        mVerses.add(10);
-        reference.setVerses(mVerses);
+        reference.addVerse(new Verse(8));
+        reference.addVerse(new Verse(9));
+        reference.addVerse(new Verse(10));
         String expected = String.format(Locale.getDefault(), "%1$s %2$d:%3$s", bookName, chapter,
                 reference.getVersesString());
         assertEquals("must return expected format", expected, reference.toString());
@@ -57,12 +46,11 @@ public class ReferenceTest {
         Reference reference = new Reference(new Book(bookName));
         Integer chapter = 15;
         reference.setChapter(chapter);
-        mVerses.add(11);
-        mVerses.add(15);
-        mVerses.add(104);
-        mVerses.add(105);
-        mVerses.add(106);
-        reference.setVerses(mVerses);
+        reference.addVerse(new Verse(11));
+        reference.addVerse(new Verse(15));
+        reference.addVerse(new Verse(104));
+        reference.addVerse(new Verse(105));
+        reference.addVerse(new Verse(106));
         String expected = String.format(Locale.getDefault(), "%1$s %2$d:%3$s", bookName, chapter,
                 reference.getVersesString());
         assertEquals("must return expected format", expected, reference.toString());
@@ -93,8 +81,7 @@ public class ReferenceTest {
     @Test
     public void setVerses_negative() {
         Reference reference = new Reference(new Book("Hebreus"));
-        mVerses.add(-1000);
-        reference.setVerses(mVerses);
+        reference.addVerse(new Verse(-1000));
         int expected = 0;
         assertEquals("must not accept negative", expected, reference.getVerses().size());
     }
@@ -102,8 +89,7 @@ public class ReferenceTest {
     @Test
     public void setVerses_zero() {
         Reference reference = new Reference(new Book("Hebreus"));
-        mVerses.add(0);
-        reference.setVerses(mVerses);
+        reference.addVerse(new Verse(0));
         int expected = 0;
         assertEquals("must not accept zero", expected, reference.getVerses().size());
     }
@@ -111,11 +97,10 @@ public class ReferenceTest {
     @Test
     public void setVerses_duplicated() {
         Reference reference = new Reference(new Book("Hebreus"));
-        int verse = 3;
-        mVerses.add(verse);
-        mVerses.add(verse);
-        mVerses.add(verse);
-        reference.setVerses(mVerses);
+        Verse verse = new Verse(3);
+        reference.addVerse(verse);
+        reference.addVerse(verse);
+        reference.addVerse(verse);
         int expected = 1;
         assertEquals("must not accept duplicated", expected, reference.getVerses().size());
     }
@@ -123,16 +108,15 @@ public class ReferenceTest {
     @Test
     public void setVerses_unsorted() {
         Reference reference = new Reference(new Book("Hebreus"));
-        int verseB = 30;
-        mVerses.add(verseB);
-        int verseC = 115;
-        mVerses.add(verseC);
-        int verseA = 2;
-        mVerses.add(verseA);
-        reference.setVerses(mVerses);
+        Verse verseB = new Verse(30);
+        reference.addVerse(verseB);
+        Verse verseC = new Verse(155);
+        reference.addVerse(verseC);
+        Verse verseA = new Verse(2);
+        reference.addVerse(verseA);
 
         int i = 0;
-        for (int verse : reference.getVerses()) {
+        for (Verse verse : reference.getVerses()) {
             switch (i) {
                 case 0:
                     assertEquals("must be in order", verseA, verse);
@@ -151,10 +135,10 @@ public class ReferenceTest {
     @Test(expected = UnsupportedOperationException.class)
     public void getVerses_unmodifiableSet() {
         Reference reference = new Reference(new Book("Ẽxodo"));
-        mVerses.add(1);
-        mVerses.add(10);
-        reference.setVerses(mVerses);
-        reference.getVerses().remove(0);
+        Verse verse = new Verse(1);
+        reference.addVerse(verse);
+        reference.addVerse(new Verse(10));
+        reference.getVerses().remove(verse);
     }
 
     @Test
@@ -165,10 +149,9 @@ public class ReferenceTest {
 
     @Test
     public void getVersesString_singleVerse() {
-        int verse = 1;
+        Verse verse = new Verse(1);
         Reference reference = new Reference(new Book("Hebreus"));
-        mVerses.add(verse);
-        reference.setVerses(mVerses);
+        reference.addVerse(verse);
         String expected = String.valueOf(verse);
         assertEquals("must return same verse as string", expected, reference.getVersesString());
     }
@@ -176,127 +159,119 @@ public class ReferenceTest {
     @Test
     public void getVersesString_twoVersesRange() {
         Reference reference = new Reference(new Book("Hebreus"));
-        int verse1 = 1;
-        mVerses.add(verse1);
-        int verse2 = 2;
-        mVerses.add(verse2);
-        reference.setVerses(mVerses);
-        String expected = String.format(Locale.getDefault(), "%1$d-%2$d", verse1, verse2);
+        Verse verse1 = new Verse(1);
+        reference.addVerse(verse1);
+        Verse verse2 = new Verse(2);
+        reference.addVerse(verse2);
+        String expected = String.format(Locale.getDefault(), "%1$d-%2$d", verse1.getNumber(), verse2.getNumber());
         assertEquals("must return x-y format", expected, reference.getVersesString());
     }
 
     @Test
     public void getVersesString_twoVersesDistinct() {
         Reference reference = new Reference(new Book("Hebreus"));
-        int verse1 = 1;
-        mVerses.add(verse1);
-        int verse2 = 9;
-        mVerses.add(verse2);
-        reference.setVerses(mVerses);
-        String expected = String.format(Locale.getDefault(), "%1$d,%2$d", verse1, verse2);
+        Verse verse1 = new Verse(1);
+        reference.addVerse(verse1);
+        Verse verse2 = new Verse(9);
+        reference.addVerse(verse2);
+        String expected = String.format(Locale.getDefault(), "%1$d,%2$d", verse1.getNumber(), verse2.getNumber());
         assertEquals("must return x,y format", expected, reference.getVersesString());
     }
 
     @Test
     public void getVersesString_multipleVersesRange() {
         Reference reference = new Reference(new Book("Hebreus"));
-        int verse1 = 2;
-        mVerses.add(verse1);
-        mVerses.add(3);
-        int verse3 = 4;
-        mVerses.add(verse3);
-        reference.setVerses(mVerses);
-        String expected = String.format(Locale.getDefault(), "%1$d-%2$d", verse1, verse3);
+        Verse verse1 = new Verse(2);
+        reference.addVerse(verse1);
+        reference.addVerse(new Verse(3));
+        Verse verse3 = new Verse(4);
+        reference.addVerse(verse3);
+        String expected = String.format(Locale.getDefault(), "%1$d-%2$d", verse1.getNumber(), verse3.getNumber());
         assertEquals("must return x-y format", expected, reference.getVersesString());
     }
 
     @Test
     public void getVersesString_multipleVersesDistinct() {
         Reference reference = new Reference(new Book("Hebreus"));
-        int verse1 = 2;
-        mVerses.add(verse1);
-        int verse2 = 6;
-        mVerses.add(verse2);
-        int verse3 = 10;
-        mVerses.add(verse3);
-        reference.setVerses(mVerses);
-        String expected = String.format(Locale.getDefault(), "%1$d,%2$d,%3$d", verse1, verse2, verse3);
+        Verse verse1 = new Verse(2);
+        reference.addVerse(verse1);
+        Verse verse2 = new Verse(6);
+        reference.addVerse(verse2);
+        Verse verse3 = new Verse(10);
+        reference.addVerse(verse3);
+        String expected = String.format(Locale.getDefault(), "%1$d,%2$d,%3$d", verse1.getNumber(), verse2.getNumber(), verse3.getNumber());
         assertEquals("must return x,y,z format", expected, reference.getVersesString());
     }
 
     @Test
     public void getVersesString_multipleVersesMixed() {
         Reference reference = new Reference(new Book("Hebreus"));
-        int verse1 = 2;
-        mVerses.add(verse1);
-        int rangeStartVerse = 6;
-        mVerses.add(rangeStartVerse);
-        mVerses.add(7);
-        mVerses.add(8);
-        mVerses.add(9);
-        int rangeEndVerse = 10;
-        mVerses.add(rangeEndVerse);
-        int verse4 = 13;
-        mVerses.add(verse4);
-        reference.setVerses(mVerses);
-        String expected = String.format(Locale.getDefault(), "%1$d,%2$d-%3$d,%4$d", verse1, rangeStartVerse,
-                rangeEndVerse, verse4);
+        Verse verse1 = new Verse(2);
+        reference.addVerse(verse1);
+        Verse rangeStartVerse = new Verse(6);
+        reference.addVerse(rangeStartVerse);
+        reference.addVerse(new Verse(7));
+        reference.addVerse(new Verse(8));
+        reference.addVerse(new Verse(9));
+        Verse rangeEndVerse = new Verse(10);
+        reference.addVerse(rangeEndVerse);
+        Verse verse4 = new Verse(13);
+        reference.addVerse(verse4);
+        String expected = String.format(Locale.getDefault(), "%1$d,%2$d-%3$d,%4$d", verse1.getNumber(), rangeStartVerse.getNumber(),
+                rangeEndVerse.getNumber(), verse4.getNumber());
         assertEquals("must return w,x-y,z format", expected, reference.getVersesString());
     }
 
     @Test
     public void getVersesString_multipleVersesMixed2() {
         Reference reference = new Reference(new Book("Hebreus"));
-        int verseA = 7;
-        mVerses.add(verseA);
-        mVerses.add(8);
-        mVerses.add(9);
-        int verseB = 10;
-        mVerses.add(verseB);
-        int verseC = 15;
-        mVerses.add(verseC);
-        mVerses.add(16);
-        int verseD = 17;
-        mVerses.add(verseD);
-        reference.setVerses(mVerses);
-        String expected = String.format(Locale.getDefault(), "%1$d-%2$d,%3$d-%4$d", verseA, verseB,
-                verseC, verseD);
+        Verse verseA = new Verse(7);
+        reference.addVerse(verseA);
+        reference.addVerse(new Verse(8));
+        reference.addVerse(new Verse(9));
+        Verse verseB = new Verse(10);
+        reference.addVerse(verseB);
+        Verse verseC = new Verse(15);
+        reference.addVerse(verseC);
+        reference.addVerse(new Verse(16));
+        Verse verseD = new Verse(17);
+        reference.addVerse(verseD);
+        String expected = String.format(Locale.getDefault(), "%1$d-%2$d,%3$d-%4$d", verseA.getNumber(), verseB.getNumber(),
+                verseC.getNumber(), verseD.getNumber());
         assertEquals("must return w-x,y-z format", expected, reference.getVersesString());
     }
 
     @Test
     public void getVersesString_multipleVersesMixed3() {
         Reference reference = new Reference(new Book("Salmos"));
-        int verseA = 101;
-        mVerses.add(verseA);
-        int verseB = 103;
-        mVerses.add(verseB);
-        int mockVerse = 1004;
-        mVerses.add(mockVerse);
-        mVerses.add(1005);
-        int mockVerse4 = 1006;
-        mVerses.add(mockVerse4);
-        int mockVerse2 = 1100;
-        mVerses.add(mockVerse2);
-        int mockVerse3 = 9999;
-        mVerses.add(mockVerse3);
-        reference.setVerses(mVerses);
-        String expected = String.format(Locale.getDefault(), "%1$d,%2$d,%3$d-%4$d,%5$d,%6$d", verseA, verseB,
-                mockVerse, mockVerse4, mockVerse2, mockVerse3);
+        Verse verseA = new Verse(101);
+        reference.addVerse(verseA);
+        Verse verseB = new Verse(103);
+        reference.addVerse(verseB);
+        Verse mockVerse = new Verse(1004);
+        reference.addVerse(mockVerse);
+        reference.addVerse(new Verse(1005));
+        Verse mockVerse4 = new Verse(1006);
+        reference.addVerse(mockVerse4);
+        Verse mockVerse2 = new Verse(1100);
+        reference.addVerse(mockVerse2);
+        Verse mockVerse3 = new Verse(9999);
+        reference.addVerse(mockVerse3);
+        String expected = String.format(Locale.getDefault(), "%1$d,%2$d,%3$d-%4$d,%5$d,%6$d", verseA.getNumber(), verseB.getNumber(),
+                mockVerse.getNumber(), mockVerse4.getNumber(), mockVerse2.getNumber(), mockVerse3.getNumber());
         assertEquals("must return u,v,w-x,y,d format", expected, reference.getVersesString());
     }
 
     @Test
     public void getVersesString_unsorted() {
         Reference reference = new Reference(new Book("Salmos"));
-        int verse1 = 99;
-        mVerses.add(verse1);
-        int verse2 = 100;
-        mVerses.add(verse2);
-        int verse3 = 2;
-        mVerses.add(verse3);
-        reference.setVerses(mVerses);
-        String expected = String.format(Locale.getDefault(), "%1$d,%2$d-%3$d", verse3, verse1, verse2);
+        Verse verse1 = new Verse(99);
+        reference.addVerse(verse1);
+        Verse verse2 = new Verse(100);
+        reference.addVerse(verse2);
+        Verse verse3 = new Verse(2);
+        reference.addVerse(verse3);
+        String expected = String.format(Locale.getDefault(), "%1$d,%2$d-%3$d", verse3.getNumber(), verse1.getNumber(), verse2.getNumber());
         assertEquals("must return x,y-z sorted format", expected, reference.getVersesString());
     }
 
@@ -304,37 +279,25 @@ public class ReferenceTest {
     public void getVersesString_parts() {
         Reference reference = new Reference(new Book("Eclesiastes"));
         char part = 'a';
-        TreeSet<Character> parts = new TreeSet<>();
-        parts.add(part);
-        int verse = 3;
-        SortedMap<Integer, SortedSet<Character>> verses = new TreeMap<>();
-        verses.put(verse, parts);
-        int verse2 = 4;
-        verses.put(verse2, null);
-        reference.setVerses(verses);
-        String expected = String.format(Locale.getDefault(), "%1$d%2$s-%3$d", verse, part, verse2);
+        Verse verse = new Verse(3);
+        reference.addVerse(verse, part);
+        Verse verse2 = new Verse(4);
+        reference.addVerse(verse2);
+
+        String expected = String.format(Locale.getDefault(), "%1$d%2$s-%3$d", verse.getNumber(), part, verse2.getNumber());
         assertEquals("must return xy format", expected, reference.getVersesString());
     }
 
     @Test
     public void getVersesString_parts2() {
         Reference reference = new Reference(new Book("Eclesiastes"));
-        SortedMap<Integer, SortedSet<Character>> verses = new TreeMap<>();
-        verses.put(3, new TreeSet<>(Collections.singletonList('a')));
-        verses.put(4, null);
-        verses.put(5, null);
-        verses.put(7, new TreeSet<>(Arrays.asList('c', 'd')));
-        verses.put(8, null);
-        reference.setVerses(verses);
-
+        reference.addVerse(new Verse(3), 'a');
+        reference.addVerse(new Verse(4));
+        reference.addVerse(new Verse(5));
+        reference.addVerse(new Verse(7), new Character[]{'c', 'd'});
+        reference.addVerse(new Verse(8));
         String expected = "3a-5,7cd-8";
         assertEquals(expected, reference.getVersesString());
     }
 
-    @After
-    public void tearDown() {
-        mVerses.clear();
-    }
-
 }
-
